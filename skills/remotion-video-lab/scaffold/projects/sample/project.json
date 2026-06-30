@@ -1,0 +1,18 @@
+{
+  "id": "Sample",
+  "title": "Sample demo edit",
+  "fps": 30,
+  "width": 1280,
+  "height": 720,
+  "overlap": 12,
+  "sourceFile": "sample/source.mp4",
+  "musicFile": "sample/music.mp3",
+  "musicVolume": 0.15,
+  "segments": [
+    { "name": "Intro", "srcStart": 0, "srcEnd": 10, "rate": 1.2 },
+    { "name": "Key reveal", "srcStart": 30, "srcEnd": 45, "rate": 1.0 }
+  ],
+  "captions": [
+    { "seg": 0, "atSec": 0.5, "durSec": 4, "text": "標題範例", "sub": "副標範例" }
+  ]
+}
