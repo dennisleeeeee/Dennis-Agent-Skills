@@ -1,8 +1,8 @@
 ---
-name: m365-cost-advisor
+name: copilot-cost-advisor
 description: |
   Cost-aware router for M365 Copilot Cowork. Apply at the start of a task (or via
-  /m365-cost-advisor) to pick the cheapest route: a metered Cowork run burns credits,
+  /copilot-cost-advisor) to pick the cheapest route: a metered Cowork run burns credits,
   but the licence-included Copilot Chat + Work IQ (mail, Teams, SharePoint, OneDrive)
   and built-in Office apps + Copilot cost nothing per run. Judge in one pass: if the
   included tools CAN'T do it (automation / orchestration only Cowork can do) → proceed
@@ -11,7 +11,7 @@ description: |
   analysis, a report, a spreadsheet model) → STOP first and suggest PowerPoint / Excel /
   Word + Copilot before spending Cowork credits. Near-zero cost: no tool calls, no file
   reads, no deliberation.
-  Use at the start of a task, on /m365-cost-advisor, or on "Cowork or Chat", "cheaper
+  Use at the start of a task, on /copilot-cost-advisor, or on "Cowork or Chat", "cheaper
   way", "save money", "省錢", "用 Cowork 還是內建".
   Do NOT interrupt a task only Cowork can do; once the user says "go ahead", proceed.
 license: MIT

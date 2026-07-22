@@ -1,4 +1,4 @@
-# m365-cost-advisor — reference (load ONLY when needed)
+# copilot-cost-advisor — reference (load ONLY when needed)
 
 Read this **only** after the gate has fired and you actually need a detail: the
 built-in app map, delegation targets, cost figures, one-time enrollment, or the
@@ -58,7 +58,7 @@ instructions. If not already present, offer to append to `copilot-instructions.m
 (primary: `/mnt/user-config/.claude/copilot-instructions.md`):
 
 > ## Cost check before every task
-> At the start of every task, before acting, apply `m365-cost-advisor`: for a
+> At the start of every task, before acting, apply `copilot-cost-advisor`: for a
 > work-data question or simple one-off task, recommend **M365 Copilot Chat (Work IQ)**
 > in one line and stop for my decision; go straight to Cowork only for multi-step
 > automation / transformation that only Cowork can do.

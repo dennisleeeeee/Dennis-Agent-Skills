@@ -66,3 +66,13 @@ skill folder and link to them, so agents only load detail when needed.
 | ----- | ----------- |
 | [remotion-video-lab](skills/remotion-video-lab/SKILL.md) | Portable Remotion + ffmpeg pipeline that turns a raw screen recording into a focused, captioned, scored final cut (trim dead time, speed up slow parts, add captions/music/narration/blur). Ships its own scaffold and enforces an agenda-first confirm workflow. |
 | [slide-template-creator](skills/slide-template-creator/SKILL.md) | Builds a branded `.pptx` deck by reading the brand palette/fonts from a template, generating content slides with pptxgenjs, then merging the template's branded cover and closing slides onto the front and back via python-pptx. |
+
+## Plugin packages
+
+Prebuilt M365 Copilot Cowork plugin bundles (manifest + icons + skills), ready to
+sideload. Publisher: **TW MS Dennis**.
+
+| Toolkit | Skill | Download |
+| ------- | ----- | -------- |
+| **Org User Toolkit** | [copilot-cost-advisor](skills/AI%20Implement/skills/copilot-cost-advisor/SKILL.md) — routes each task to the cheapest capable option before Cowork credits are spent | [org-user-toolkit-1.0.0.zip](https://github.com/dennis175168/Dennis-Agent-Skills/raw/main/skills/AI%20Implement/plugin/org-user-toolkit/dist/org-user-toolkit-1.0.0.zip) |
+| **Org IT Toolkit** | [ai-finops-report](skills/AI%20Implement/skills/ai-finops-report/SKILL.md) — turns Cowork/Neptune consumption CSV exports into Word + Excel + HTML FinOps insight reports | [org-it-toolkit-1.0.0.zip](https://github.com/dennis175168/Dennis-Agent-Skills/raw/main/skills/AI%20Implement/plugin/org-it-toolkit/dist/org-it-toolkit-1.0.0.zip) |

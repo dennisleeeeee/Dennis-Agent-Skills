@@ -1,0 +1,29 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/teams/vDevPreview/MicrosoftTeams.schema.json",
+  "manifestVersion": "devPreview",
+  "version": "1.0.0",
+  "id": "5e5c1c43-5e34-407a-8893-59267babf630",
+  "packageName": "com.twmsdennis.orgusertoolkit",
+  "developer": {
+    "name": "TW MS Dennis",
+    "websiteUrl": "https://learn.microsoft.com",
+    "privacyUrl": "https://privacy.microsoft.com/privacystatement",
+    "termsOfUseUrl": "https://learn.microsoft.com/legal/termsofuse"
+  },
+  "name": {
+    "short": "Org User Toolkit",
+    "full": "Org User Toolkit for M365 Copilot Cowork"
+  },
+  "description": {
+    "short": "Route each Copilot Cowork task to the cheapest capable option.",
+    "full": "A cost-governance toolkit for end users of M365 Copilot Cowork. copilot-cost-advisor routes each task to the cheapest capable option at task time: the licence-included Copilot Chat + Work IQ (mail, Teams, SharePoint, OneDrive) and built-in Office apps + Copilot cost nothing per run, while a metered Cowork run burns credits. It judges in one pass \u2014 cheap lookups get a 'use Chat next time' nudge, expensive but divertible artifacts get a pre-tip to use PowerPoint/Excel/Word + Copilot first, and tasks only Cowork can do proceed untouched. Near-zero overhead: no tool calls, no file reads, no deliberation. Prevent spend at task time, before credits are burned."
+  },
+  "icons": {
+    "color": "color.png",
+    "outline": "outline.png"
+  },
+  "accentColor": "#FFB900",
+  "agentSkills": [
+    { "folder": "./skills/copilot-cost-advisor" }
+  ]
+}
