@@ -1,0 +1,30 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/teams/vDevPreview/MicrosoftTeams.schema.json",
+  "manifestVersion": "devPreview",
+  "version": "1.1.0",
+  "id": "21b8106f-b72f-4369-81dc-2e0bc762ef06",
+  "packageName": "com.twmsdennis.orgittoolkit",
+  "developer": {
+    "name": "TW MS Dennis",
+    "websiteUrl": "https://learn.microsoft.com",
+    "privacyUrl": "https://privacy.microsoft.com/privacystatement",
+    "termsOfUseUrl": "https://learn.microsoft.com/legal/termsofuse"
+  },
+  "name": {
+    "short": "Org IT Toolkit",
+    "full": "Org IT Toolkit for M365 Copilot Cowork"
+  },
+  "description": {
+    "short": "FinOps insight reports plus a Cowork plugin builder for IT teams.",
+    "full": "An IT/admin toolkit for M365 Copilot Cowork. ai-finops-report turns the exported Neptune/Cowork credit-consumption CSV logs (per-user, per-group, per-service consumption + Cowork task details) into polished insight deliverables \u2014 a zh-TW Word narrative, a Power BI-style Excel dashboard, and an interactive HTML dashboard with slicers \u2014 centred on a quantified cost-optimization action plan (cap ungoverned spend, reclaim idle licences, break concentration risk, right-size limits); everything is measured in credits (never a fabricated USD figure). cowork-plugin-builder scaffolds, validates, and packages new Cowork plugins end-to-end into sideload-ready zips \u2014 SKILL.md frontmatter whitelist, devPreview manifest with agentSkills + remote MCP agentConnectors, icon generation, and forward-slash packaging \u2014 with the known validation gotchas baked in so the first upload passes."
+  },
+  "icons": {
+    "color": "color.png",
+    "outline": "outline.png"
+  },
+  "accentColor": "#FFB900",
+  "agentSkills": [
+    { "folder": "./skills/ai-finops-report" },
+    { "folder": "./skills/cowork-plugin-builder" }
+  ]
+}

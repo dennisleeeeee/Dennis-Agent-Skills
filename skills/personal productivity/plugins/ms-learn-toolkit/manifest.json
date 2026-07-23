@@ -1,0 +1,44 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/teams/vDevPreview/MicrosoftTeams.schema.json",
+  "manifestVersion": "devPreview",
+  "version": "1.0.0",
+  "id": "8f3c2a17-6b4e-4d29-9a51-1c7e0d5b93af",
+  "packageName": "com.twmsdennis.mslearntoolkit",
+  "developer": {
+    "name": "TW MS Dennis",
+    "websiteUrl": "https://learn.microsoft.com",
+    "privacyUrl": "https://privacy.microsoft.com/privacystatement",
+    "termsOfUseUrl": "https://learn.microsoft.com/legal/termsofuse"
+  },
+  "name": {
+    "short": "MS Learn Toolkit",
+    "full": "MS Learn Docs Toolkit for M365 Copilot Cowork"
+  },
+  "description": {
+    "short": "Ground Microsoft/Azure/M365 answers in official Microsoft Learn docs.",
+    "full": "A documentation-grounding toolkit for M365 Copilot Cowork built on the Microsoft Learn MCP Server (https://learn.microsoft.com/api/mcp, streamable HTTP, unauthenticated). The ms-learn-docs skill runs the full Learn workflow in one pass \u2014 microsoft_docs_search for breadth, microsoft_docs_fetch for full-article depth, and microsoft_code_sample_search for runnable snippets \u2014 then answers with citations to the official Learn URLs. It never fabricates APIs, CLI flags, SDK names, portal steps, or version numbers: if the docs don't say it, it says so. Use whenever you need a trustworthy Microsoft/Azure/M365/.NET/Entra/Foundry/Fabric answer, an official how-to or migration guide, or sample code grounded in first-party documentation."
+  },
+  "icons": {
+    "color": "color.png",
+    "outline": "outline.png"
+  },
+  "accentColor": "#0078D4",
+  "agentSkills": [
+    { "folder": "./skills/ms-learn-docs" }
+  ],
+  "agentConnectors": [
+    {
+      "id": "microsoft-learn-mcp",
+      "displayName": "Microsoft Learn MCP",
+      "description": "Official Microsoft Learn documentation search, article fetch, and code-sample lookup. Public, unauthenticated, streamable HTTP.",
+      "toolSource": {
+        "remoteMcpServer": {
+          "mcpServerUrl": "https://learn.microsoft.com/api/mcp",
+          "authorization": {
+            "type": "None"
+          }
+        }
+      }
+    }
+  ]
+}
