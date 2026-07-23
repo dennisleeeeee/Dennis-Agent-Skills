@@ -12,6 +12,8 @@ description: |
   question, wants official docs, a how-to, a migration guide, or sample code,
   or says "check the docs", "official source", "MS Learn", "查官方文件",
   "有沒有官方範例", "根據文件".
+  Source is EXCLUSIVELY the Microsoft Learn MCP tools — never web search, browsing,
+  or any non-learn.microsoft.com site.
   Do NOT use for non-Microsoft products or when the user explicitly wants a
   quick answer from memory without citations.
 license: MIT
@@ -34,7 +36,22 @@ Breadth first, depth on demand, code when asked.
 > available, say so and fall back to a clearly-labelled "from memory, verify against
 > Learn" answer — never pretend a citation exists.
 
-## The three tools
+## Source exclusivity (HARD RULE — read first)
+
+This skill answers **only** from the Microsoft Learn MCP tools. Nothing else.
+
+- ✅ **Allowed sources:** `microsoft_docs_search`, `microsoft_docs_fetch`,
+  `microsoft_code_sample_search` — and the `learn.microsoft.com` URLs they return.
+- ⛔ **Forbidden:** general web search / browsing, Bing/Google, Stack Overflow, blogs,
+  GitHub issues, third-party tutorials, or **any** page not returned by these three
+  tools. Do **not** `fetch` a URL that didn't come from `microsoft_docs_search`.
+- Every URL you cite must be under **`learn.microsoft.com`** (or an official
+  `*.microsoft.com` docs page returned by the tools). If a citation isn't from the
+  Learn MCP, don't use it.
+- **If Microsoft Learn doesn't cover it**, say exactly that — e.g. “Microsoft Learn
+  沒有相關文件” — and stop. Do **not** substitute another website to fill the gap.
+- If another tool (web search) is available in the environment, still **don't** use it
+  for this skill. Learn MCP is the single source of truth here.
 
 | Tool | Use it for | Returns |
 | --- | --- | --- |
@@ -72,6 +89,9 @@ Don't fan out into many searches for the same question.
 
 - **Cite the official Learn URL** for every non-trivial claim (APIs, CLI flags, portal
   steps, limits, prices measured in the doc's own units, version numbers).
+- **Only Microsoft Learn MCP is a valid source** — no web search, no other sites; every
+  cited URL is a `learn.microsoft.com` page the MCP tools returned (see *Source
+  exclusivity*).
 - **Every referenced point ships as 原文 (verbatim quote) + 解釋 + 來源 link** — never a
   bare paraphrase without the exact quote and its URL.
 - **Never fabricate** an endpoint, parameter, SDK name, or step. If the docs don't say
