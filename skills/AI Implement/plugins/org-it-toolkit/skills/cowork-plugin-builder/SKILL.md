@@ -29,8 +29,8 @@ M365 Copilot Cowork plugin `.zip`. A Cowork plugin is an M365 unified app packag
 (same family as Teams apps) containing `manifest.json` + icons + a `skills/` folder.
 
 > Reusable assets in this skill:
-> - `scripts/package-plugin.ps1` — builds the dist zip with **forward-slash** entries.
-> - `scripts/new-icons.ps1` — generates placeholder `color.png` / `outline.png`.
+> - `scripts/package_plugin.py` — builds the dist zip with **forward-slash** entries.
+> - `scripts/new_icons.py` — generates placeholder `color.png` / `outline.png`.
 > - `references/manifest-cheatsheet.md` — full manifest schema, connector shape,
 >   auth types, and the complete validation-rule / gotcha list.
 
@@ -121,7 +121,7 @@ Auth types: `None` (public — no `referenceId`), `OAuthPluginVault`, `ApiKeyPlu
 ## Step 3 — Generate icons
 
 `color.png` 192×192 (full color) and `outline.png` 32×32 (single color, transparent bg).
-Run `scripts/new-icons.ps1 -PluginDir <dir> -AccentColor "#0078D4"` for branded
+Run `python3 scripts/new_icons.py --plugin-dir <dir> --accent "#0078D4"` for branded
 placeholders; replace before store submission.
 
 ## Step 4 — Package (forward-slash zip)
@@ -130,7 +130,7 @@ Do **not** use `Compress-Archive` on Windows — it writes backslash zip entries
 violate Cowork's "no backslashes in file names" rule. Use the bundled script:
 
 ```powershell
-./scripts/package-plugin.ps1 -PluginDir <plugin-folder> -Version 1.0.0
+python3 ./scripts/package_plugin.py --plugin-dir <plugin-folder> --version 1.0.0
 ```
 
 It emits `<plugin-folder>/dist/<name>-<version>.zip` with all files at the **root**
@@ -157,5 +157,5 @@ Response** and read `errorMessage` for the real schema violation.
 ## References
 
 - `references/manifest-cheatsheet.md` — schema, connector shape, auth, full validation rules & gotchas.
-- `scripts/package-plugin.ps1` — forward-slash zip packager.
-- `scripts/new-icons.ps1` — placeholder icon generator.
+- `scripts/package_plugin.py` — forward-slash zip packager with extension validation.
+- `scripts/new_icons.py` — placeholder icon generator.

@@ -131,7 +131,12 @@ no hidden (dot) files · no Windows reserved names (`CON`,`PRN`,`AUX`,`NUL`,`COM
 
 1. **Backslash zip entries** — Windows `Compress-Archive` writes `skills\x\SKILL.md`;
    Cowork rejects backslashes. Build the zip with .NET `ZipArchive` (forward slashes) —
-   see `scripts/package-plugin.ps1`.
+   see `scripts/package_plugin.py`.
+2. **Unsupported file extensions** — Cowork validates the extension of every file
+   inside a skill folder and rejects the WHOLE package if one is not allowed.
+   `.ps1` is rejected (`InvalidAgentSkill: File extension '.ps1' is not supported`).
+   Ship helper scripts as `.py` / `.sh` / `.js` instead. `package_plugin.py`
+   fails the build up-front when it finds a disallowed extension.
 2. **Folder ≠ name** — the single most common failure.
 3. **Extra frontmatter fields** — anything outside the 5-field whitelist → reject.
 4. **`path` vs `folder`** — use `folder`.

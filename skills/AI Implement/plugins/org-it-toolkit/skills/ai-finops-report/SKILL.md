@@ -122,8 +122,39 @@ metric definitions, thresholds, and the optimization heuristics the recommendati
 engine applies. See [`references/data-schema.md`](references/data-schema.md) for the
 exact CSV export columns and how each field maps into the report.
 
+The headline analysis is **tier allocation**: every user is placed on a three-tier
+cost model, where each tier maps to a **surface** — **Fixed** (Copilot Chat /
+Copilot in Apps, included, zero credit) / **Semi-fixed** (Custom Agent via MCS /
+Power Platform / Foundry) / **Dynamic** (Cowork / UBB, correctly metered). The
+report shows the current mix; it never imposes a target ratio, because each
+organisation sets its own. Cost weight is expressed **relative to the tenant's own
+median**, never as a fixed credit figure, so the analysis survives model changes.
+
+Every classification carries a **confidence label (高 / 中 / 低)** — it is inferred
+from usage shape, not task content, so it is a hypothesis to verify. Findings are
+turned into actions using only five IT levers: 情境確認 / 額度政策 / 使用引導 /
+建 Custom Agent / 授權調整.
+
+## Agent Builder variant
+
+[`agent-builder-instructions.txt`](agent-builder-instructions.txt) is a
+self-contained, ~8,000-character version of this skill for customers who want to
+run it as a declarative agent in **Agent Builder** instead of Cowork — no credit
+consumption, no scripts, no knowledge files. Paste it into the Instructions field
+and enable *Create documents, charts, and code*.
+
+Trade-off: the agent re-derives everything with code interpreter, so numbers are
+not guaranteed to match this skill exactly. Use the skill for authoritative
+monthly reporting and the agent for day-to-day self-service.
+
+**Both variants must stay in sync.** `references/finops-playbook.md` is the single
+source of truth for thresholds, the tier model and the canonical output spec
+(layout order, 6 KPI cards, chart set, Chart.js rendering). Change it there first,
+then mirror into `agent-builder-instructions.txt`.
+
 ## References
 
 - [`scripts/generate_finops_report.py`](scripts/generate_finops_report.py) — the generator.
+- [`agent-builder-instructions.txt`](agent-builder-instructions.txt) — Agent Builder variant.
 - [`references/data-schema.md`](references/data-schema.md) — CSV export schema.
 - [`references/finops-playbook.md`](references/finops-playbook.md) — metrics + optimization rules.
