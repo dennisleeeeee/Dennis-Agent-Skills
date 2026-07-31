@@ -1,0 +1,41 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/teams/vDevPreview/MicrosoftTeams.schema.json",
+  "manifestVersion": "devPreview",
+  "version": "1.0.0",
+  "id": "1086da6b-42a0-40ee-8681-21f35ee3b923",
+  "packageName": "com.twmsdennis.githubmcp",
+  "developer": {
+    "name": "TW MS Dennis",
+    "websiteUrl": "https://github.com/github/github-mcp-server",
+    "privacyUrl": "https://docs.github.com/site-policy/privacy-policies/github-privacy-statement",
+    "termsOfUseUrl": "https://docs.github.com/site-policy/github-terms/github-terms-of-service"
+  },
+  "name": {
+    "short": "GitHub Toolkit",
+    "full": "GitHub Toolkit for M365 Copilot Cowork"
+  },
+  "description": {
+    "short": "Read and act on GitHub repos, issues, PRs, and Actions inside Cowork.",
+    "full": "Connects Copilot Cowork to GitHub's official remote MCP server (https://api.githubcopilot.com/mcp/). Lets Cowork search code, read repositories and files, triage issues, review pull requests, inspect GitHub Actions runs, and summarize development activity — all scoped to what the signed-in user is allowed to see via OAuth."
+  },
+  "icons": {
+    "color": "color.png",
+    "outline": "outline.png"
+  },
+  "accentColor": "#24292F",
+  "agentSkills": [
+    { "folder": "./skills/github-repo-workflow" }
+  ],
+  "agentConnectors": [
+    {
+      "id": "github-mcp",
+      "displayName": "GitHub MCP",
+      "description": "GitHub's official remote MCP server. Exposes repositories, files, code search, issues, pull requests, Actions workflow runs, notifications, and security alerts over Streamable HTTP with OAuth.",
+      "toolSource": {
+        "remoteMcpServer": {
+          "mcpServerUrl": "https://api.githubcopilot.com/mcp/"
+        }
+      }
+    }
+  ]
+}

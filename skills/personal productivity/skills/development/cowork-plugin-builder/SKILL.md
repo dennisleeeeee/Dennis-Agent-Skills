@@ -152,6 +152,7 @@ Response** and read `errorMessage` for the real schema violation.
 - [ ] `mcpServerUrl` is HTTPS
 - [ ] Icons present: `color.png` 192×192, `outline.png` 32×32
 - [ ] Zip: files at root, **forward-slash** entries
+- [ ] `version` does **not** start with `0` (use `1.0.0`, never `0.1.0`), and is incremented on every re-upload
 - [ ] `id` GUID stays stable across versions
 
 ## References

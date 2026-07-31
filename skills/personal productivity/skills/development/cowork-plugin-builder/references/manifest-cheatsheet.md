@@ -118,6 +118,8 @@ kebab-case: lowercase alphanumerics + hyphens; no leading/trailing/consecutive h
 
 Manifest: `ASKILL-M001` folder required · `ASKILL-M002` ≤ 20 skills · `ASKILL-M003`
 folder ≤ 256 chars.
+Version: `version` must not start with `0` (`0.1.0` → rejected; use `1.0.0`) and must be
+incremented on every re-upload of the same `id`.
 Package: `ASKILL-P001` folder exists in zip · `P002` folder has SKILL.md · `P003` valid
 YAML frontmatter · `P004` has `name` · `P005` has `description` · `P006` name == folder
 · `P007` name is kebab-case · `P008` no duplicate folders.
@@ -139,6 +141,9 @@ no hidden (dot) files · no Windows reserved names (`CON`,`PRN`,`AUX`,`NUL`,`COM
 6. **`None` + `referenceId`** — must not coexist.
 7. **Files not at zip root** — everything sits at the top level, not inside a parent folder.
 8. **Unstable GUID** — keep `id` constant across versions or it registers as a new app.
+9. **`version` starting with `0`** — `0.1.0` / `0.1` are rejected: *"App version should not
+   start with '0'"*. Ship `1.0.0` as the first version. Re-uploading the same app also
+   requires an **incremented** version, so bump before every sideload attempt.
 
 ## Sideload
 
