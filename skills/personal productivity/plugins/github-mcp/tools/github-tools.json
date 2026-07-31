@@ -1,0 +1,463 @@
+{
+  "tools": [
+    {
+      "name": "get_me",
+      "description": "Get details of the authenticated GitHub user, including login, name, and account type. Use this first when the user says \"my repos\", \"my issues\", or \"my PRs\" so later queries can be scoped with the correct login.",
+      "annotations": {
+        "title": "Get Signed-in User",
+        "readOnlyHint": true,
+        "destructiveHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    {
+      "name": "search_repositories",
+      "description": "Search GitHub repositories. To list the signed-in user's repositories, call get_me first and then query with 'user:<login>'. Supports qualifiers such as 'org:', 'language:', 'is:private', 'fork:true', and 'sort:updated'.",
+      "annotations": {
+        "title": "Search Repositories",
+        "readOnlyHint": true,
+        "destructiveHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "GitHub repository search query, e.g. 'user:octocat sort:updated' or 'org:microsoft language:typescript'."
+          },
+          "page": {
+            "type": "number",
+            "description": "Page number for pagination (min 1)."
+          },
+          "perPage": {
+            "type": "number",
+            "description": "Results per page (min 1, max 100)."
+          }
+        },
+        "required": [
+          "query"
+        ]
+      }
+    },
+    {
+      "name": "get_file_contents",
+      "description": "Get the contents of a file or list the contents of a directory in a GitHub repository. Use a trailing slash on the path to list a directory.",
+      "annotations": {
+        "title": "Read File or Directory",
+        "readOnlyHint": true,
+        "destructiveHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "owner": {
+            "type": "string",
+            "description": "Repository owner (user or organization)."
+          },
+          "repo": {
+            "type": "string",
+            "description": "Repository name."
+          },
+          "path": {
+            "type": "string",
+            "description": "Path to the file or directory. Use '/' for the repository root."
+          },
+          "ref": {
+            "type": "string",
+            "description": "Git ref to read from, e.g. 'refs/heads/main' or a commit SHA. Defaults to the default branch."
+          }
+        },
+        "required": [
+          "owner",
+          "repo"
+        ]
+      }
+    },
+    {
+      "name": "search_code",
+      "description": "Search for code across GitHub repositories. Always scope the query with qualifiers such as 'repo:owner/name', 'org:', 'path:', or 'language:' to keep results relevant.",
+      "annotations": {
+        "title": "Search Code",
+        "readOnlyHint": true,
+        "destructiveHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "Code search query, e.g. 'repo:github/docs path:src createClient'."
+          },
+          "sort": {
+            "type": "string",
+            "description": "Sort field. Only 'indexed' is supported."
+          },
+          "order": {
+            "type": "string",
+            "description": "Sort order: 'asc' or 'desc'."
+          },
+          "page": {
+            "type": "number",
+            "description": "Page number for pagination (min 1)."
+          },
+          "perPage": {
+            "type": "number",
+            "description": "Results per page (min 1, max 100)."
+          }
+        },
+        "required": [
+          "query"
+        ]
+      }
+    },
+    {
+      "name": "list_branches",
+      "description": "List the branches of a GitHub repository.",
+      "annotations": {
+        "title": "List Branches",
+        "readOnlyHint": true,
+        "destructiveHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "owner": {
+            "type": "string",
+            "description": "Repository owner."
+          },
+          "repo": {
+            "type": "string",
+            "description": "Repository name."
+          },
+          "page": {
+            "type": "number",
+            "description": "Page number for pagination (min 1)."
+          },
+          "perPage": {
+            "type": "number",
+            "description": "Results per page (min 1, max 100)."
+          }
+        },
+        "required": [
+          "owner",
+          "repo"
+        ]
+      }
+    },
+    {
+      "name": "list_commits",
+      "description": "List commits in a GitHub repository. Scope with 'sha' for a branch and 'path' to follow the history of a single file.",
+      "annotations": {
+        "title": "List Commits",
+        "readOnlyHint": true,
+        "destructiveHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "owner": {
+            "type": "string",
+            "description": "Repository owner."
+          },
+          "repo": {
+            "type": "string",
+            "description": "Repository name."
+          },
+          "sha": {
+            "type": "string",
+            "description": "Commit SHA, branch, or tag to start from. Defaults to the default branch."
+          },
+          "path": {
+            "type": "string",
+            "description": "Only return commits that touch this file path."
+          },
+          "author": {
+            "type": "string",
+            "description": "Filter by author login or email."
+          },
+          "page": {
+            "type": "number",
+            "description": "Page number for pagination (min 1)."
+          },
+          "perPage": {
+            "type": "number",
+            "description": "Results per page (min 1, max 100)."
+          }
+        },
+        "required": [
+          "owner",
+          "repo"
+        ]
+      }
+    },
+    {
+      "name": "list_issues",
+      "description": "List issues in a GitHub repository, filtered by state, labels, and update time.",
+      "annotations": {
+        "title": "List Issues",
+        "readOnlyHint": true,
+        "destructiveHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "owner": {
+            "type": "string",
+            "description": "Repository owner."
+          },
+          "repo": {
+            "type": "string",
+            "description": "Repository name."
+          },
+          "state": {
+            "type": "string",
+            "description": "Issue state: 'OPEN' or 'CLOSED'."
+          },
+          "labels": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Filter by label names."
+          },
+          "since": {
+            "type": "string",
+            "description": "Only issues updated at or after this ISO 8601 timestamp."
+          },
+          "orderBy": {
+            "type": "string",
+            "description": "Sort field: 'CREATED_AT', 'UPDATED_AT', or 'COMMENTS'."
+          },
+          "direction": {
+            "type": "string",
+            "description": "Sort direction: 'ASC' or 'DESC'."
+          },
+          "perPage": {
+            "type": "number",
+            "description": "Results per page (min 1, max 100)."
+          }
+        },
+        "required": [
+          "owner",
+          "repo"
+        ]
+      }
+    },
+    {
+      "name": "issue_read",
+      "description": "Read a single GitHub issue. Use the 'method' parameter to choose what to return: 'get' for details, 'get_comments' for the comment thread, 'get_sub_issues' for child issues, or 'get_labels'.",
+      "annotations": {
+        "title": "Read Issue",
+        "readOnlyHint": true,
+        "destructiveHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "method": {
+            "type": "string",
+            "description": "One of 'get', 'get_comments', 'get_sub_issues', 'get_labels'."
+          },
+          "owner": {
+            "type": "string",
+            "description": "Repository owner."
+          },
+          "repo": {
+            "type": "string",
+            "description": "Repository name."
+          },
+          "issue_number": {
+            "type": "number",
+            "description": "The issue number."
+          }
+        },
+        "required": [
+          "method",
+          "owner",
+          "repo",
+          "issue_number"
+        ]
+      }
+    },
+    {
+      "name": "search_issues",
+      "description": "Search issues across GitHub. Scope with qualifiers such as 'repo:owner/name', 'is:open', 'label:bug', 'author:', or 'assignee:'.",
+      "annotations": {
+        "title": "Search Issues",
+        "readOnlyHint": true,
+        "destructiveHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "Issue search query, e.g. 'repo:github/docs is:open label:bug'."
+          },
+          "owner": {
+            "type": "string",
+            "description": "Optional repository owner to scope the search."
+          },
+          "repo": {
+            "type": "string",
+            "description": "Optional repository name to scope the search."
+          },
+          "sort": {
+            "type": "string",
+            "description": "Sort field, e.g. 'created', 'updated', 'comments'."
+          },
+          "order": {
+            "type": "string",
+            "description": "Sort order: 'asc' or 'desc'."
+          },
+          "page": {
+            "type": "number",
+            "description": "Page number for pagination (min 1)."
+          },
+          "perPage": {
+            "type": "number",
+            "description": "Results per page (min 1, max 100)."
+          }
+        },
+        "required": [
+          "query"
+        ]
+      }
+    },
+    {
+      "name": "list_pull_requests",
+      "description": "List pull requests in a GitHub repository, filtered by state, head branch, and base branch.",
+      "annotations": {
+        "title": "List Pull Requests",
+        "readOnlyHint": true,
+        "destructiveHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "owner": {
+            "type": "string",
+            "description": "Repository owner."
+          },
+          "repo": {
+            "type": "string",
+            "description": "Repository name."
+          },
+          "state": {
+            "type": "string",
+            "description": "Pull request state: 'open', 'closed', or 'all'."
+          },
+          "head": {
+            "type": "string",
+            "description": "Filter by head user/org and branch, e.g. 'octocat:fix-auth'."
+          },
+          "base": {
+            "type": "string",
+            "description": "Filter by base branch name."
+          },
+          "sort": {
+            "type": "string",
+            "description": "Sort field: 'created', 'updated', 'popularity', or 'long-running'."
+          },
+          "direction": {
+            "type": "string",
+            "description": "Sort direction: 'asc' or 'desc'."
+          },
+          "page": {
+            "type": "number",
+            "description": "Page number for pagination (min 1)."
+          },
+          "perPage": {
+            "type": "number",
+            "description": "Results per page (min 1, max 100)."
+          }
+        },
+        "required": [
+          "owner",
+          "repo"
+        ]
+      }
+    },
+    {
+      "name": "pull_request_read",
+      "description": "Read a single pull request. Use the 'method' parameter to choose what to return: 'get' for details, 'get_diff', 'get_files', 'get_status' for CI checks, 'get_comments', 'get_reviews', or 'get_review_comments'.",
+      "annotations": {
+        "title": "Read Pull Request",
+        "readOnlyHint": true,
+        "destructiveHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "method": {
+            "type": "string",
+            "description": "One of 'get', 'get_diff', 'get_status', 'get_files', 'get_review_comments', 'get_reviews', 'get_comments'."
+          },
+          "owner": {
+            "type": "string",
+            "description": "Repository owner."
+          },
+          "repo": {
+            "type": "string",
+            "description": "Repository name."
+          },
+          "pullNumber": {
+            "type": "number",
+            "description": "The pull request number."
+          },
+          "page": {
+            "type": "number",
+            "description": "Page number for pagination (min 1)."
+          },
+          "perPage": {
+            "type": "number",
+            "description": "Results per page (min 1, max 100)."
+          }
+        },
+        "required": [
+          "method",
+          "owner",
+          "repo",
+          "pullNumber"
+        ]
+      }
+    },
+    {
+      "name": "list_releases",
+      "description": "List the releases of a GitHub repository, newest first.",
+      "annotations": {
+        "title": "List Releases",
+        "readOnlyHint": true,
+        "destructiveHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "owner": {
+            "type": "string",
+            "description": "Repository owner."
+          },
+          "repo": {
+            "type": "string",
+            "description": "Repository name."
+          },
+          "page": {
+            "type": "number",
+            "description": "Page number for pagination (min 1)."
+          },
+          "perPage": {
+            "type": "number",
+            "description": "Results per page (min 1, max 100)."
+          }
+        },
+        "required": [
+          "owner",
+          "repo"
+        ]
+      }
+    }
+  ]
+}

@@ -67,6 +67,13 @@ def collect_files(plugin_dir: pathlib.Path) -> list[pathlib.Path]:
         if p.is_file() and not is_junk(p):
             files.append(p)
 
+    # Connector packages reference tool-description JSON via mcpToolDescription.file.
+    tools_dir = plugin_dir / "tools"
+    if tools_dir.is_dir():
+        for p in sorted(tools_dir.rglob("*")):
+            if p.is_file() and not is_junk(p):
+                files.append(p)
+
     return files
 
 

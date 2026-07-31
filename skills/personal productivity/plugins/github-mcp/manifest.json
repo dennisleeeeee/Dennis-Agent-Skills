@@ -1,9 +1,8 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/teams/vDevPreview/MicrosoftTeams.schema.json",
   "manifestVersion": "devPreview",
-  "version": "1.0.0",
+  "version": "1.3.0",
   "id": "1086da6b-42a0-40ee-8681-21f35ee3b923",
-  "packageName": "com.twmsdennis.githubmcp",
   "developer": {
     "name": "TW MS Dennis",
     "websiteUrl": "https://github.com/github/github-mcp-server",
@@ -33,7 +32,10 @@
       "description": "GitHub's official remote MCP server. Exposes repositories, files, code search, issues, pull requests, Actions workflow runs, notifications, and security alerts over Streamable HTTP with OAuth.",
       "toolSource": {
         "remoteMcpServer": {
-          "mcpServerUrl": "https://api.githubcopilot.com/mcp/"
+          "mcpServerUrl": "https://api.githubcopilot.com/mcp/",
+          "mcpToolDescription": {
+            "file": "tools/github-tools.json"
+          }
         }
       }
     }

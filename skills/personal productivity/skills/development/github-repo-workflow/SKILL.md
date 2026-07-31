@@ -5,7 +5,7 @@ license: MIT
 compatibility: Cowork (Frontier), Claude Code, VS Code Copilot
 metadata:
   author: Dennis Li
-  version: 1.0.0
+  version: 1.3.0
   source: https://api.githubcopilot.com/mcp/
   category: Developer Tools
   connector: github-mcp
@@ -29,23 +29,26 @@ GitLab / Azure DevOps / Bitbucket.
 
 ## Tool families on the connector
 
-Tool names come from `tools/list` at runtime — discover before assuming. Expect these
-families:
+This package registers a **read-only** toolset (see `tools/github-tools.json` in the
+package). Always confirm what is actually available before assuming a tool exists.
 
 | Family | Typical use |
 |---|---|
-| Repos & files | `get_file_contents`, `list_branches`, `list_commits`, `get_commit`, `list_tags`, `list_releases` |
-| Search | `search_code`, `search_repositories`, `search_issues`, `search_pull_requests`, `search_users` |
-| Issues | `list_issues`, `issue_read`, `issue_write`, `add_issue_comment`, `sub_issue_write` |
-| Pull requests | `list_pull_requests`, `pull_request_read`, `pull_request_review_write`, `add_comment_to_pending_review`, `merge_pull_request` |
-| Writes | `create_branch`, `create_or_update_file`, `push_files`, `create_pull_request`, `create_repository` |
-| Actions & security | workflow run listing/logs, `run_secret_scanning`, code-scanning and Dependabot alerts |
-| Copilot agent | `assign_copilot_to_issue`, `create_pull_request_with_copilot`, `get_copilot_job_status` |
+| Identity | `get_me` — resolve the signed-in login before any "my repos / my issues" query |
+| Repos & files | `get_file_contents`, `list_branches`, `list_commits`, `list_releases` |
+| Search | `search_repositories`, `search_code`, `search_issues` |
+| Issues | `list_issues`, `issue_read` |
+| Pull requests | `list_pull_requests`, `pull_request_read` |
+
+Write operations (create issue, comment, branch, PR, merge) are **not** registered in
+this package. If the user asks for one, say so and offer the equivalent GitHub URL
+instead of pretending the call failed.
 
 ## Workflow
 
 1. **Resolve the target.** Extract `owner` and `repo` from the URL or ask once if
-   ambiguous. Never guess an org name.
+   ambiguous. Never guess an org name. For "my repos / my issues / my PRs", call
+   `get_me` first and scope the search with the returned login.
 2. **Read before writing.** For a PR: `pull_request_read` (details → files → comments)
    before commenting. For an issue: `issue_read` before replying.
 3. **Search, then fetch.** Use `search_code` to locate a symbol, then
@@ -57,7 +60,8 @@ families:
 
 ## Write-operation rules (important)
 
-Writes are irreversible from the user's perspective. Before any tool that creates,
+Write tools are not part of this package, but if a future version registers them,
+they are irreversible from the user's perspective. Before any tool that creates,
 edits, merges, or closes:
 
 - **State exactly what you are about to do** (target repo, branch, title, body) and
@@ -103,8 +107,8 @@ Read-only calls (search, read, list) need no confirmation.
 
 > **User**: Open an issue about the flaky auth test.
 >
-> **Action**: Draft title + body, show it to the user, **wait for confirmation**, then
-> `issue_write` and return the new issue URL.
+> **Action**: Write tools aren't registered in this package — say so, draft the title
+> and body for the user to paste, and link the repo's new-issue URL.
 
 ## References
 

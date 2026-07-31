@@ -108,12 +108,17 @@ To attach a remote MCP server, add `agentConnectors` (up to 10). The connection 
     "toolSource": {
       "remoteMcpServer": {
         "mcpServerUrl": "https://example.com/api/mcp",
+        "mcpToolDescription": { "file": "tools/my-tools.json" },
         "authorization": { "type": "None" }
       }
     }
   }
 ]
 ```
+
+`mcpToolDescription.file` points at a JSON file **shipped inside the zip** whose content
+matches the server's `tools/list` response (`{ "tools": [ { name, description,
+inputSchema } ] }`). Skipping it is why a connector installs but exposes zero tools.
 
 Auth types: `None` (public — no `referenceId`), `OAuthPluginVault`, `ApiKeyPluginVault`
 (both need a Token Store `referenceId`). REST-only backends need an MCP wrapper first.
@@ -138,9 +143,12 @@ level and forward-slash paths.
 
 ## Step 5 — Sideload & validate
 
-M365 Admin Center → Integrated apps → **Upload custom apps** → App type **Teams app**
-→ choose the zip. On failure, open **F12 → Network → `uploadCustomApp` POST →
-Response** and read `errorMessage` for the real schema violation.
+Fastest author loop: **Cowork → Customize → Plugins → Add plugin** → pick the zip → in
+the **Share** dialog choose **Only you**. Validation errors surface right in that dialog.
+
+Tenant rollout: M365 Admin Center → Integrated apps → **Upload custom apps** → App type
+**Teams app** → choose the zip. On failure, open **F12 → Network → `uploadCustomApp`
+POST → Response** and read `errorMessage` for the real schema violation.
 
 ## Pre-flight checklist
 
@@ -148,6 +156,9 @@ Response** and read `errorMessage` for the real schema violation.
 - [ ] Frontmatter only uses the 5 whitelist fields
 - [ ] `agentSkills` uses the `folder` key (not `path`)
 - [ ] Connector uses `toolSource.remoteMcpServer.mcpServerUrl` + `authorization`; `displayName` (not `name`)
+- [ ] Connector has `mcpToolDescription.file`, and that JSON file is inside the zip (`tools/...`)
+- [ ] `mcpToolDescription.file` has **no `./` prefix** — it must match the zip entry exactly
+- [ ] Every tool in the tool-description file has `annotations` (untagged tools are treated as destructive)
 - [ ] `None` auth has **no** `referenceId`; OAuth/ApiKey **has** one
 - [ ] `mcpServerUrl` is HTTPS
 - [ ] Icons present: `color.png` 192×192, `outline.png` 32×32

@@ -13,6 +13,8 @@ my-plugin.zip                 # all entries at ROOT, forward-slash paths
 ├── manifest.json             # M365 unified app manifest
 ├── color.png                 # 192×192 full-color icon
 ├── outline.png               # 32×32 single-color icon, transparent bg
+├── tools/                    # connector packages only
+│   └── my-tools.json         # referenced by mcpToolDescription.file
 └── skills/
     └── <skill-name>/
         ├── SKILL.md
@@ -86,6 +88,13 @@ my-plugin.zip                 # all entries at ROOT, forward-slash paths
 | `ApiKeyPluginVault` | API-key services | Enterprise Token Store `referenceId` |
 | `DynamicClientRegistration` | RFC 7591 DCR — omit `authorization`; Cowork creates the OAuth client | — |
 
+⚠️ Cowork's own "Supported MCP features" table lists only **`None`,
+`OAuthPluginVault`, `ApiKeyPluginVault`** (with a `referenceId` from Teams Developer
+Portal). DCR appears in the build guide but not in that support matrix — if a connector
+installs yet every tool call fails auth, register an OAuth client and switch to
+`OAuthPluginVault` rather than assuming DCR works. API-key auth isn't live in Cowork yet.
+Users must complete the sign-in themselves; an admin cannot consent on their behalf.
+
 Rule: `referenceId` is **required** unless `type` is `None`, and must be **absent** when
 `type` is `None`. Secrets never appear in the manifest or skill files.
 
@@ -144,6 +153,22 @@ no hidden (dot) files · no Windows reserved names (`CON`,`PRN`,`AUX`,`NUL`,`COM
 9. **`version` starting with `0`** — `0.1.0` / `0.1` are rejected: *"App version should not
    start with '0'"*. Ship `1.0.0` as the first version. Re-uploading the same app also
    requires an **incremented** version, so bump before every sideload attempt.
+10. **Missing `mcpToolDescription`** — the Cowork docs state every `remoteMcpServer`
+    connector must declare `mcpToolDescription.file`, and the referenced JSON must ship
+    in the zip (conventionally `tools/<name>-tools.json`). The generic v1.29 schema marks
+    it optional (omitting it = dynamic `tools/list` discovery), but on `devPreview` the
+    upload can succeed while the connector silently registers **zero tools** — the skill
+    loads, yet the agent reports "no connector tools available". Ship the static file.
+11. **`./` in `mcpToolDescription.file`** — unlike `agentSkills.folder` (which uses
+    `./skills/x`), the tool-description path is matched against the zip entry **literally**.
+    `./tools/x.json` fails with `InvalidAgentConnector: ... declared MCP tool description
+    file ./tools/x.json not found in the app package`. Write `tools/x.json`.
+12. **Tools without `annotations`** — Cowork treats any tool that lacks safety
+    annotations as **destructive** and prompts for confirmation on every call. Give every
+    tool `annotations: { title, readOnlyHint, destructiveHint }`.
+13. **`packageName` on v1.28** — accepted on `devPreview`, but v1.28 sets
+    `additionalProperties: false` at the root and fails with `Property 'packageName' has
+    not been defined...`. Neither official Cowork example includes it — leave it out.
 
 ## Sideload
 
