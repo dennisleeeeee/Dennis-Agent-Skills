@@ -142,3 +142,7 @@ nests tables and breaks the layout. Never leave an empty container.
 - Every figure must trace to the uploaded data; never fabricate.
 - One export is a snapshot, not a trend. Cost weights are relative and
   model-dependent - never quote a fixed credit value per task.
+
+# AGENT BUILDER SUGGESTED PROMPTS
+Title: Start
+Message: 請幫我分析附上的 Copilot credit 用量 log，找出成本浪費與治理缺口，並產出 Excel、Word、HTML 三份完整報告。
